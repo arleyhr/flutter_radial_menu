@@ -33,6 +33,7 @@ class RadialAnimation extends StatelessWidget {
   final AnimationController controller;
   final Animation<double> scale;
   final Animation<double> translation;
+  final Animation<double> rotation;
 
   RadialAnimation({Key key, this.controller }) :
 
@@ -43,10 +44,16 @@ class RadialAnimation extends StatelessWidget {
         CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn)
     ),
     translation = Tween<double>(
-        begin: 0.0,
-        end: 100.0
+      begin: 0.0,
+      end: 100.0
     ).animate(
-        CurvedAnimation(parent: controller, curve: Curves.linear)
+        CurvedAnimation(parent: controller, curve: Curves.easeInOutQuad)
+    ),
+    rotation = Tween<double>(
+      begin: 0.0,
+      end: 360.0
+    ).animate(
+        CurvedAnimation(parent: controller, curve: Interval(0.0, 0.7))
     ),
 
   super(key: key);
@@ -79,34 +86,37 @@ class RadialAnimation extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (ctx, builder) {
-        return Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            _buildButton(0, color: Colors.red, icon: Icons.ac_unit),
-            _buildButton(45, color: Colors.orange, icon: Icons.access_alarm),
-            _buildButton(90, color: Colors.green, icon: Icons.add_photo_alternate),
-            _buildButton(135, color: Colors.teal, icon: Icons.call),
-            _buildButton(180, color: Colors.blue, icon: Icons.blur_circular),
-            _buildButton(225, color: Colors.pink, icon: Icons.build),
-            _buildButton(270, color: Colors.indigo, icon: Icons.face),
-            _buildButton(315, color: Colors.black, icon: Icons.grade),
-            Transform.scale(
-              scale: scale.value - 1,
-              child: FloatingActionButton(
-                child: Icon(Icons.cancel),
-                onPressed: _close,
-                backgroundColor: Colors.red,
+        return Transform.rotate(
+          angle: radians(rotation.value),
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              _buildButton(0, color: Colors.red, icon: Icons.ac_unit),
+              _buildButton(45, color: Colors.orange, icon: Icons.access_alarm),
+              _buildButton(90, color: Colors.green, icon: Icons.add_photo_alternate),
+              _buildButton(135, color: Colors.teal, icon: Icons.call),
+              _buildButton(180, color: Colors.blue, icon: Icons.blur_circular),
+              _buildButton(225, color: Colors.pink, icon: Icons.build),
+              _buildButton(270, color: Colors.indigo, icon: Icons.face),
+              _buildButton(315, color: Colors.black, icon: Icons.grade),
+              Transform.scale(
+                scale: scale.value - 1,
+                child: FloatingActionButton(
+                  child: Icon(Icons.cancel),
+                  onPressed: _close,
+                  backgroundColor: Colors.red,
+                ),
               ),
-            ),
-            Transform.scale(
-              scale: scale.value,
-              child: FloatingActionButton(
-                child: Icon(Icons.supervised_user_circle),
-                onPressed: _open,
-                backgroundColor: Colors.blue,
+              Transform.scale(
+                scale: scale.value,
+                child: FloatingActionButton(
+                  child: Icon(Icons.supervised_user_circle),
+                  onPressed: _open,
+                  backgroundColor: Colors.blue,
+                ),
               ),
-            ),
-          ],
+            ],
+          )
         );
       },
     );
