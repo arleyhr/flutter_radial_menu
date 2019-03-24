@@ -1,4 +1,4 @@
-# Animated Radial Menu
+# Flutter Animated Radial Menu
 ![demo](https://github.com/arleyhr/flutter_radial_menu/blob/master/demo.gif?raw=true)
 
 A new Flutter application.
