@@ -1,7 +1,8 @@
-# Flutter Animated Radial Menu
+# Flutter Mobile and Web Animated Radial Menu
 ![demo](https://github.com/arleyhr/flutter_radial_menu/blob/master/demo.gif?raw=true)
 
-A new Flutter application.
+# Flutter Web
+>[Flutter Web Demo](https://arleyhr.github.io/flutter_radial_menu)
 
 ## Getting Started
 
